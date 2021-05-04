@@ -36,7 +36,7 @@ public class FirstPersonPlayerAudio : MonoBehaviour
             Destroy(other.gameObject);
             tokens++;
             tokenCounter.text = "Tokens Collected " + tokens;
-            if (tokens == 1) {
+            if (tokens == 30) {
                 tokenCounter.gameObject.SetActive(false);
                 collectAllText.gameObject.SetActive(true);
                 finished = true;
