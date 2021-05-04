@@ -7,6 +7,10 @@ public class FirstPersonPlayerAudio : MonoBehaviour
 {
     public AudioClip splashSound;
 
+    public AudioClip pickUpSound;
+
+    public AudioClip victorySound;
+
     public AudioSource audioS;
 
     public AudioMixerSnapshot ambIdleSnapshot;
@@ -18,6 +22,14 @@ public class FirstPersonPlayerAudio : MonoBehaviour
         }
         if (other.CompareTag("Ambience")) {
             ambInSnapshot.TransitionTo(0.5f);
+        }
+        if (other.CompareTag("PickUp")) {
+            audioS.PlayOneShot(pickUpSound);
+            ambIdleSnapshot.TransitionTo(0.5f);
+            Destroy(other.gameObject);
+        }
+        if (other.CompareTag("Fin")) {
+            audioS.PlayOneShot(victorySound);
         }
     }
 
