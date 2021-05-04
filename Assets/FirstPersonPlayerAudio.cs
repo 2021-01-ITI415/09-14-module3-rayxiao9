@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
@@ -20,6 +21,7 @@ public class FirstPersonPlayerAudio : MonoBehaviour
 
     private int tokens = 0;
     public Text tokenCounter, finishedText, collectAllText;
+    private bool finished = false;
     
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Water")) {
@@ -34,14 +36,16 @@ public class FirstPersonPlayerAudio : MonoBehaviour
             Destroy(other.gameObject);
             tokens++;
             tokenCounter.text = "Tokens Collected " + tokens;
-            if (tokens == 29) {
+            if (tokens == 1) {
                 tokenCounter.gameObject.SetActive(false);
                 collectAllText.gameObject.SetActive(true);
+                finished = true;
                 finishedSnapshot.TransitionTo(0.5f);
                 audioS.PlayOneShot(victorySound);
+                Invoke("ReloadLevel", 4f);
             }
         }
-        if (other.CompareTag("Fin")) {
+        if (other.CompareTag("Fin") && !finished) {
             finishedSnapshot.TransitionTo(0.5f);
             audioS.PlayOneShot(victorySound);
             tokenCounter.gameObject.SetActive(false);
@@ -51,6 +55,7 @@ public class FirstPersonPlayerAudio : MonoBehaviour
                 finishedText.text = "You Finished with\n" + tokens + "\nTokens!";
             }
             finishedText.gameObject.SetActive(true);
+            Invoke("ReloadLevel", 4f);
         }
     }
 
@@ -82,5 +87,9 @@ public class FirstPersonPlayerAudio : MonoBehaviour
 
         finishedText.gameObject.SetActive(false);
         collectAllText.gameObject.SetActive(false);
+    }
+
+    void ReloadLevel() {
+        SceneManager.LoadScene("07-Prototype3");
     }
 }

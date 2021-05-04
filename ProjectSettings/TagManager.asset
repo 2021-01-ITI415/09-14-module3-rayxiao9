@@ -8,6 +8,8 @@ TagManager:
   - Doorway
   - EnemyZone
   - Ambience
+  - PickUp
+  - Fin
   layers:
   - Default
   - TransparentFX
